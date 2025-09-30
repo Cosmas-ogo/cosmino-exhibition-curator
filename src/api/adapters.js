@@ -1,3 +1,5 @@
+// Map raw API payloads into a single normalized Artwork shape.
+
 export function mapMetToArtwork(o) {
   return {
     id: `met:${o.objectID}`,
@@ -13,18 +15,23 @@ export function mapMetToArtwork(o) {
     link: o.objectURL || o.linkResource || "",
     imageThumb: o.primaryImageSmall || null,
     imageFull: o.primaryImage || o.primaryImageSmall || null,
+    isPublicDomain: Boolean(o.isPublicDomain),
   };
 }
 
 export function mapCmaToArtwork(a) {
   const creator =
-    (a.creators && a.creators[0] && a.creators[0].description) || null;
+    (Array.isArray(a.creators) &&
+      a.creators[0] &&
+      (a.creators[0].description || a.creators[0].display_name)) ||
+    null;
+
   return {
     id: `cma:${a.id ?? a.accession_number}`,
     source: "cma",
     title: a.title || "Untitled",
     artist: creator || "Unknown",
-    dateText: a.creation_date || "",
+    dateText: a.creation_date || a.creation_date_earliest || "",
     medium: a.technique || a.type || null,
     culture: Array.isArray(a.culture)
       ? a.culture.join(", ")
@@ -35,5 +42,6 @@ export function mapCmaToArtwork(a) {
     link: a.url || "",
     imageThumb: a?.images?.web?.url || null,
     imageFull: a?.images?.print?.url || a?.images?.web?.url || null,
+    isPublicDomain: a.cc0 === 1 || a.share_license_status === "CC0",
   };
 }
