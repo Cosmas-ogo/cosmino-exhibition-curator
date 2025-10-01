@@ -20,7 +20,7 @@ export default function SearchBar({ defaultValue = "", onSubmit }) {
             onChange={(e) => setQ(e.target.value)}
             type="search"
             placeholder="Search artworks…"
-            className="w-full bg-transparent outline-none"
+            className="w-full bg-transparent outline-none text-black placeholder-black"
             aria-label="Search artworks"
           />
           <button
