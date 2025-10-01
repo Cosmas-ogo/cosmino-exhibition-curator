@@ -25,7 +25,7 @@ export default function Header() {
         </div>
         <Link
           to="/exhibition"
-          className="rounded-full border px-3 py-1 text-sm hover:bg-gray-50"
+          className="rounded-full border-gray-300 px-3 py-1 text-sm hover:bg-gray-100"
           aria-label={`Open My Exhibition (${count} items)`}
         >
           My Exhibition ({count})
