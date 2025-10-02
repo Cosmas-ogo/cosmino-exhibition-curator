@@ -1,9 +1,17 @@
 export default function ArtworkCard({ item, onOpen, onAdd }) {
   return (
-    <button
+    <div
+      role="button"
+      tabIndex={0}
       className="w-full text-left"
-      onClick={onOpen}
       aria-label={`Open details for ${item.title} by ${item.artist}`}
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
     >
       <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100">
         {item.imageThumb ? (
@@ -20,6 +28,7 @@ export default function ArtworkCard({ item, onOpen, onAdd }) {
           </div>
         )}
       </div>
+
       <div className="mt-2 flex items-start justify-between gap-2">
         <div className="min-w-0">
           <div className="truncate font-medium">{item.title}</div>
@@ -29,11 +38,12 @@ export default function ArtworkCard({ item, onOpen, onAdd }) {
           {item.source.toUpperCase()}
         </span>
       </div>
+
       <div className="mt-1">
         <button
           type="button"
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // so clicking Add doesn’t trigger onOpen
             onAdd?.(item);
           }}
           className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
@@ -41,6 +51,6 @@ export default function ArtworkCard({ item, onOpen, onAdd }) {
           Add
         </button>
       </div>
-    </button>
+    </div>
   );
 }
