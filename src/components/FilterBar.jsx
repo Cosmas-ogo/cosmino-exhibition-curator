@@ -8,8 +8,10 @@ export default function FilterBar({
   return (
     <div className="mt-3 flex flex-wrap items-center gap-3">
       <fieldset className="flex items-center gap-2">
-        <legend className="mr-2 text-sm text-gray-600">Sources</legend>
-        <label className="inline-flex items-center gap-1 text-sm">
+        <legend className="mr-2 text-sm text-gray-600 dark:text-gray-300">
+          Sources
+        </legend>
+        <label className="inline-flex items-center gap-1 text-sm focus-within:ring-2">
           <input
             type="checkbox"
             checked={includeMet}
@@ -32,11 +34,13 @@ export default function FilterBar({
       </fieldset>
 
       <label className="ml-auto text-sm">
-        <span className="mr-2 text-gray-600">Sort</span>
+        <span className="mr-2 text-gray-600 dark:text-gray-300">Sort</span>
         <select
           value={sort}
           onChange={(e) => onChangeSort?.(e.target.value)}
-          className="rounded-lg border bg-white px-2 py-1"
+          className="rounded-lg border border-gray-500 bg-white px-2 py-1
+             dark:border-gray-400 dark:bg-gray-900 dark:text-gray-100
+             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600"
           aria-label="Sort results"
         >
           <option value="title">Title (A–Z)</option>
