@@ -27,12 +27,10 @@ export default function Toaster() {
 
   return (
     <>
-      {/* ARIA live region for announcements */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {items.length ? items[items.length - 1].message : ""}
       </div>
 
-      {/* Visual toasts */}
       <div className="pointer-events-none fixed inset-x-0 top-16 z-50 flex flex-col items-center gap-2">
         {items.map((t) => (
           <div

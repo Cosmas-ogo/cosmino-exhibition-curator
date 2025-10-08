@@ -6,7 +6,7 @@ const STORAGE_KEY = "exhibition:v1";
 const ExhibitionContext = createContext(null);
 
 const initialState = {
-  items: [], // array of normalized artworks
+  items: [],
   meta: { title: "", description: "" },
 };
 
@@ -37,7 +37,6 @@ function reducer(state, action) {
 export function ExhibitionProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // hydrate on mount
   useEffect(() => {
     const saved = getSessionJSON(STORAGE_KEY);
     if (saved) {
@@ -45,7 +44,6 @@ export function ExhibitionProvider({ children }) {
     }
   }, []);
 
-  // persist on change
   useEffect(() => {
     setSessionJSON(STORAGE_KEY, { items: state.items, meta: state.meta });
   }, [state.items, state.meta]);

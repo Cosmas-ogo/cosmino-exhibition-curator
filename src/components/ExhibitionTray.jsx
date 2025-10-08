@@ -8,7 +8,7 @@ export default function ExhibitionTray() {
 
   return (
     <div className="sticky bottom-3 z-30 mx-3 mt-6">
-      <div className="mx-auto max-w-6xl rounded-2xl border bg-white px-4 py-3 shadow">
+      <div className="mx-auto max-w-screen-xl 2xl:max-w-screen-2xl rounded-2xl border bg-white px-4 py-3 shadow">
         <div className="flex items-center justify-between">
           <div className="text-sm">
             My Exhibition: <strong>{count}</strong> items

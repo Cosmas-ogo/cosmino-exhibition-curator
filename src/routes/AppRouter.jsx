@@ -15,7 +15,7 @@ export default function AppRouter() {
     <QueryClientProvider client={qc}>
       <ExhibitionProvider>
         <BrowserRouter>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />

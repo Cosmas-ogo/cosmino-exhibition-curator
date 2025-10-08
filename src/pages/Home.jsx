@@ -16,14 +16,15 @@ function useQueryParam(name) {
 export default function Home() {
   const navigate = useNavigate();
   const initialQ = useQueryParam("q") || "";
-  const [includeMet, setIncludeMet] = useState(true);
+  const [includeAic, setIncludeAic] = useState(true);
   const [includeCma, setIncludeCma] = useState(true);
   const [sort, setSort] = useState("title");
 
   const { data, isLoading, isError } = useSearch(initialQ, {
-    includeMet,
+    includeAic,
     includeCma,
   });
+
   const items = useMemo(() => {
     if (!data) return [];
     if (sort === "artist") {
@@ -31,7 +32,7 @@ export default function Home() {
         (a.artist || "").localeCompare(b.artist || "")
       );
     }
-    return data; // already title-sorted in hook
+    return data;
   }, [data, sort]);
 
   const [openId, setOpenId] = useState(null);
@@ -56,27 +57,39 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-3 py-4">
-      <PresetChips onSelect={onPresetSelect} />
-      <FilterBar
-        includeMet={includeMet}
-        includeCma={includeCma}
-        onChangeSource={({ source, value }) => {
-          if (source === "met") setIncludeMet(value);
-          if (source === "cma") setIncludeCma(value);
-        }}
-        sort={sort}
-        onChangeSort={setSort}
-      />
-      <ResultsGrid
-        items={items}
-        isLoading={isLoading && !!initialQ}
-        isError={isError}
-        onOpen={openDetails}
-        onAdd={(item) => dispatch({ type: "add", item })}
-      />
-      <ExhibitionTray />
+    <main className="mx-auto max-w-screen-2xl px-3 py-6">
+      <div
+        className="sticky top-[72px] z-30 bg-white/80 backdrop-blur border-b
+                      border-zinc-200 dark:bg-zinc-950/80 dark:border-zinc-800"
+      >
+        <PresetChips onSelect={onPresetSelect} active={initialQ.trim()} />
+        <FilterBar
+          includeAic={includeAic}
+          includeCma={includeCma}
+          onChangeSource={({ source, value }) => {
+            if (source === "aic") setIncludeAic(value);
+            if (source === "cma") setIncludeCma(value);
+          }}
+          sort={sort}
+          onChangeSort={setSort}
+        />
+      </div>
 
+      {initialQ ? (
+        <ResultsGrid
+          items={items}
+          isLoading={isLoading}
+          isError={isError}
+          onOpen={openDetails}
+          onAdd={(item) => dispatch({ type: "add", item })}
+        />
+      ) : (
+        <div className="mt-10 text-center text-sm text-gray-500">
+          Start by typing a search term or pick a preset above.
+        </div>
+      )}
+
+      <ExhibitionTray />
       {openId && <ArtworkModal compositeId={openId} onClose={closeDetails} />}
     </main>
   );

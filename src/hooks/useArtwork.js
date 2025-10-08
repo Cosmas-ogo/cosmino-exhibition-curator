@@ -1,12 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchMetObject } from "../api/met";
+import { fetchAicArtwork } from "../api/aic";
 import { fetchCmaArtwork } from "../api/cma";
-import { mapMetToArtwork, mapCmaToArtwork } from "../api/adapters";
+import { mapAicToArtwork, mapCmaToArtwork } from "../api/adapters";
 
-/**
- * useArtwork(input)
- * input: "met:437133" | "cma:12345" | { source: 'met'|'cma', id: '...' }
- */
 export function useArtwork(input) {
   const { source, id, composite } = normalizeInput(input);
   const queryClient = useQueryClient();
@@ -14,9 +10,12 @@ export function useArtwork(input) {
   return useQuery({
     queryKey: ["artwork", source, id],
     queryFn: async () => {
-      if (source === "met") {
-        const obj = await fetchMetObject(id);
-        return mapMetToArtwork(obj);
+      if (source === "aic") {
+        const { data, config } = await fetchAicArtwork(id);
+        return mapAicToArtwork(
+          data,
+          config?.iiif_url || "https://www.artic.edu/iiif/2"
+        );
       }
       if (source === "cma") {
         const art = await fetchCmaArtwork(id);
@@ -44,7 +43,7 @@ function normalizeInput(input) {
     };
   }
   throw new Error(
-    'useArtwork: expected "met:123", "cma:abc", or { source, id }'
+    'useArtwork: expected "aic:123", "cma:abc", or { source, id }'
   );
 }
 

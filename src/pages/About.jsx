@@ -4,12 +4,12 @@ export default function About() {
       <h1>About</h1>
       <p>
         This educational app lets you search and curate artworks from open
-        collections provided by The Metropolitan Museum of Art and the Cleveland
+        collections provided by the Art Institute of Chicago and the Cleveland
         Museum of Art.
       </p>
       <h2>Data sources</h2>
       <ul>
-        <li>The Met Collection API (Open Access)</li>
+        <li>Art Institute of Chicago API (Open Access)</li>
         <li>Cleveland Museum of Art Open Access API</li>
       </ul>
       <h2>Accessibility</h2>
