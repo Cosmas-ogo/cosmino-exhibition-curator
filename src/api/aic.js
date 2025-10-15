@@ -1,12 +1,5 @@
-// Art Institute of Chicago API client
-// Docs: https://api.artic.edu/docs/#introduction
-
 const AIC_BASE = "https://api.artic.edu/api/v1";
 
-/**
- * Search AIC artworks.
- * Returns full payload: { data: [...], config: {...}, pagination: {...} }
- */
 export async function fetchSearchAic({
   q,
   limit = 24,
@@ -14,7 +7,6 @@ export async function fetchSearchAic({
   isPublicDomain = true,
   hasImage = true,
 } = {}) {
-  // Build 'params' with fields we actually render to minimize payload size.
   const fields = [
     "id",
     "title",
@@ -34,13 +26,10 @@ export async function fetchSearchAic({
     limit: String(limit),
   });
 
-  // Simple client-side filters after fetch (AIC search doesn’t have a direct "has_image" toggle;
-  // we’ll drop items without image_id below).
   const res = await fetch(`${AIC_BASE}/artworks/search?${params.toString()}`);
   if (!res.ok) throw new Error(`AIC search failed: ${res.status}`);
   const data = await res.json();
 
-  // Optionally filter to PD + has image in client (to keep code simple & consistent)
   const filtered = {
     ...data,
     data: (data.data || []).filter((a) => {
@@ -52,7 +41,6 @@ export async function fetchSearchAic({
   return filtered;
 }
 
-/** Fetch a single AIC artwork by id (if you deep-link into one) */
 export async function fetchAicArtwork(id) {
   const fields = [
     "id",
@@ -69,5 +57,5 @@ export async function fetchAicArtwork(id) {
     `${AIC_BASE}/artworks/${id}?fields=${encodeURIComponent(fields)}`
   );
   if (!res.ok) throw new Error(`AIC artwork failed: ${res.status}`);
-  return res.json(); // { data: {...}, config: {...} }
+  return res.json();
 }

@@ -1,5 +1,3 @@
-// Map raw API payloads into a single normalized Artwork shape.
-
 export function mapCmaToArtwork(a) {
   const creator =
     (Array.isArray(a.creators) &&
@@ -28,13 +26,11 @@ export function mapCmaToArtwork(a) {
 }
 
 export function mapAicToArtwork(a, iiifUrl) {
-  // AIC gives you a global IIIF base in 'config.iiif_url' and an image_id per item.
-  // Build a small thumb and a decent full-size image URL.
   const imageId = a.image_id || null;
   const base = iiifUrl && imageId ? `${iiifUrl}/${imageId}` : null;
 
-  const imageThumb = base ? `${base}/full/400,/0/default.jpg` : null; // ~400px wide
-  const imageFull = base ? `${base}/full/843,/0/default.jpg` : null; // common AIC sample size
+  const imageThumb = base ? `${base}/full/400,/0/default.jpg` : null;
+  const imageFull = base ? `${base}/full/843,/0/default.jpg` : null;
 
   return {
     id: `aic:${a.id}`,
@@ -45,7 +41,7 @@ export function mapAicToArtwork(a, iiifUrl) {
     medium: a.medium_display || null,
     culture: a.place_of_origin || null,
     department: a.department_title || null,
-    onViewHint: null, // AIC search doesn’t return gallery here
+    onViewHint: null,
     museum: "Art Institute of Chicago",
     link: `https://www.artic.edu/artworks/${a.id}`,
     imageThumb,
