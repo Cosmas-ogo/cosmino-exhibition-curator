@@ -31,7 +31,7 @@ export default function ArtworkModal({ compositeId, onClose }) {
         <div className="flex items-start justify-between gap-4">
           <h2 className="text-lg font-semibold">Artwork details</h2>
           <button
-            className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50"
+            className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50 text-slate-900 dark:text-slate-900"
             onClick={onClose}
             aria-label="Close"
           >
