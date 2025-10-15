@@ -7,6 +7,7 @@ import Toaster from "../components/Toaster";
 import Home from "../pages/Home";
 import Exhibition from "../pages/Exhibition";
 import About from "../pages/About";
+import Present from "../pages/Present";
 
 const qc = new QueryClient();
 
@@ -21,6 +22,7 @@ export default function AppRouter() {
               <Route path="/" element={<Home />} />
               <Route path="/exhibition" element={<Exhibition />} />
               <Route path="/about" element={<About />} />
+              <Route path="/present" element={<Present />} />
               <Route
                 path="*"
                 element={

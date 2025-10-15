@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useExhibition } from "../context/ExhibitionContext";
 
 export default function ExhibitionEditor() {
   const { state, dispatch } = useExhibition();
+  const navigate = useNavigate();
 
   function move(index, delta) {
     const to = index + delta;
@@ -13,9 +15,9 @@ export default function ExhibitionEditor() {
     <div>
       <div className="grid gap-2 md:grid-cols-2">
         <label className="block">
-          <div className="text-sm text-gray-600">Title</div>
+          <div className="text-sm text-gray-600 dark:text-gray-300">Title</div>
           <input
-            className="mt-1 w-full rounded-xl border px-3 py-2"
+            className="mt-1 w-full rounded-xl border px-3 py-2 bg-white dark:bg-zinc-900"
             value={state.meta.title}
             onChange={(e) =>
               dispatch({ type: "meta", meta: { title: e.target.value } })
@@ -24,9 +26,11 @@ export default function ExhibitionEditor() {
           />
         </label>
         <label className="block">
-          <div className="text-sm text-gray-600">Description</div>
+          <div className="text-sm text-gray-600 dark:text-gray-300">
+            Description
+          </div>
           <textarea
-            className="mt-1 w-full rounded-xl border px-3 py-2"
+            className="mt-1 w-full rounded-xl border px-3 py-2 bg-white dark:bg-zinc-900"
             rows={3}
             value={state.meta.description}
             onChange={(e) =>
@@ -38,7 +42,7 @@ export default function ExhibitionEditor() {
       </div>
 
       {!state.items.length ? (
-        <div className="mt-6 text-sm text-gray-600">
+        <div className="mt-6 text-sm text-gray-600 dark:text-gray-300">
           You haven’t added any artworks yet.
         </div>
       ) : (
@@ -51,7 +55,7 @@ export default function ExhibitionEditor() {
               <span className="w-6 shrink-0 text-center text-sm text-gray-500">
                 {i + 1}.
               </span>
-              <div className="h-16 w-24 overflow-hidden rounded-lg bg-gray-100">
+              <div className="h-16 w-24 overflow-hidden rounded-lg bg-gray-100 dark:bg-zinc-800">
                 {it.imageThumb ? (
                   <img
                     src={it.imageThumb}
@@ -66,27 +70,27 @@ export default function ExhibitionEditor() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="truncate font-medium">{it.title}</div>
-                <div className="truncate text-sm text-gray-600">
+                <div className="truncate text-sm text-gray-600 dark:text-gray-300">
                   {it.artist}
                 </div>
               </div>
               <div className="flex shrink-0 items-center gap-2">
                 <button
-                  className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50"
+                  className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50 dark:hover:bg-zinc-900"
                   onClick={() => move(i, -1)}
                   aria-label="Move up"
                 >
                   ↑
                 </button>
                 <button
-                  className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50"
+                  className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50 dark:hover:bg-zinc-900"
                   onClick={() => move(i, +1)}
                   aria-label="Move down"
                 >
                   ↓
                 </button>
                 <button
-                  className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50"
+                  className="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50 dark:hover:bg-zinc-900"
                   onClick={() => dispatch({ type: "remove", id: it.id })}
                   aria-label="Remove"
                 >
@@ -100,13 +104,13 @@ export default function ExhibitionEditor() {
 
       <div className="mt-6 flex flex-wrap items-center gap-2">
         <button
-          className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50 dark:hover:bg-zinc-900"
+          onClick={() => navigate("/present")}
         >
           Present ▶
         </button>
         <button
-          className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+          className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50 dark:hover:bg-zinc-900"
           onClick={() => dispatch({ type: "clear" })}
         >
           Clear
