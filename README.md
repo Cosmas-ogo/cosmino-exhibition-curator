@@ -12,16 +12,9 @@ Curate your own viewer-driven virtual exhibitions from open museum collections. 
 - Present your exhibition in a full-screen slideshow with keyboard and click navigation.
 - Performant (field-projected search, lazy images, caching) and accessible (keyboard, ARIA, contrast).
 
----
+## Live Demo
 
-## Live Demo & Screenshots
-
-_Add your deployed URL(s) and screenshots once you publish._
-
-- Live: _TBD_
-- Screenshots: _TBD_
-
----
+- Live: https://stellular-llama-c0bc2b.netlify.app/
 
 ## Tech Stack
 
